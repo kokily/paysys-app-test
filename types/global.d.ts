@@ -85,8 +85,8 @@ declare global {
   }
 
   interface ListMenuQueries {
-    divide?: string;
-    native?: string;
+    divide: string | null;
+    native: string | null;
   }
 
   // Items Types
