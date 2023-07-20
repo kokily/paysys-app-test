@@ -9,3 +9,166 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  admin     Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Bill {
+  id          String   @id @default(uuid())
+  title       String
+  hall        String
+  etc         String
+  totalAmount Int
+  items       Json[]
+  reserve     Int?
+  cartId      String?
+  userId      String?
+  username    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Cart {
+  id        String   @id @default(uuid())
+  items     Json[]
+  completed Boolean  @default(false)
+  deleted   Boolean  @default(false)
+  userId    String?
+  billId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Item {
+  id        String   @id @default(uuid())
+  num       Int
+  name      String
+  divide    String
+  native    String
+  unit      String
+  price     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Wedding {
+  id             String   @id @default(uuid())
+  husbandName    String
+  husbandImage   String?
+  brideName      String
+  brideImage     String?
+  weddingAt      String
+  eventAt        String
+  costHusband    Int
+  costBride      Int
+  mealHusband    Int
+  mealBride      Int
+  presentHusband Int
+  presentBride   Int
+  reserveHusband Int
+  reserveBride   Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Convention {
+  id              String @id @default(uuid())
+  rentalHusband   Int
+  rentalBride     Int
+  swordHusband    Int
+  swordBride      Int
+  gloveHusband    Int
+  gloveBride      Int
+  bouquetHusband  Int
+  bouquetBride    Int
+  ceremonyHusband Int?
+  ceremonyBride   Int?
+  weddingId       String @unique
+}
+
+model Company {
+  id                String @id @default(uuid())
+  companyHusband    Int
+  companyBride      Int
+  roofTopHusband    Int
+  roofTopBride      Int
+  ownerWomanHusband Int
+  ownerWomanBride   Int
+  ownerManHusband   Int
+  ownerManBride     Int
+  selectHusband     Int
+  selectBride       Int
+  frameHusband      Int
+  frameBride        Int
+  dressHusband      Int
+  dressBride        Int
+  hairpinHusband    Int
+  hairpinBride      Int
+  wigHusband        Int
+  wigBride          Int
+  videoHusband      Int
+  videoBride        Int
+  etcHusband        Int
+  etcBride          Int
+  weddingId         String @unique
+}
+
+model Event {
+  id               String @id @default(uuid())
+  playHusband      Int
+  playBride        Int
+  anthemHusband    Int
+  anthemBride      Int
+  moderatorHusband Int
+  moderatorBride   Int
+  officiateHusband Int
+  officiateBride   Int
+  weddingId        String @unique
+}
+
+model Hanbok {
+  id                String @id @default(uuid())
+  hanbokPreHusband  Int
+  hanbokPreBride    Int
+  hanbokPostHusband Int
+  hanbokPostBride   Int
+  weddingId         String @unique
+}
+
+model Meal {
+  id              String @id @default(uuid())
+  meals           String
+  mealsPrice      Int
+  mealsNumHusband Int
+  mealsNumBride   Int
+  weddingId       String @unique
+}
+
+model Present {
+  id                String @id @default(uuid())
+  present           String
+  presentPrice      Int
+  presentNumHusband Int
+  presentNumBride   Int
+  weddingId         String @unique
+}
+
+model Reserve {
+  id         String @id @default(uuid())
+  reserve    String
+  reservePay Int
+  weddingId  String @unique
+}
+
+model Prepayment {
+  id                String @id @default(uuid())
+  prePaymentHusband Int
+  prePaymentBride   Int
+  weddingId         String @unique
+}

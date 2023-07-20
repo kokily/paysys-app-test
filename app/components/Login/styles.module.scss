@@ -1,0 +1,31 @@
+.container {
+  position: absolute;
+  width: 320px;
+  top: 50%;
+  left: 50%;
+  box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.6);
+  transform: translate(-50%, -50%);
+  animation: 0.5s ease-out 0s 1 fadeIn;
+}
+
+.logo {
+  background: #22b8cf;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo_link {
+  color: white;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    font-weight: bolder;  
+  }
+}
