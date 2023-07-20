@@ -1,0 +1,83 @@
+@import '@/styles/utils.scss';
+
+.container {
+  width: 100%;
+  padding: 0;
+  border-radius: 0.8rem;
+  overflow: hidden;
+
+  tr:hover {
+    background: #91a7ff;
+    color: white;
+    strong {
+      color: #c92a2a;
+    }
+  }
+
+  th,
+  td {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    text-align: center;
+
+    strong {
+      color: #364fc7;
+    }
+
+    span {
+      color: #868e96;
+
+      @include isSmall {
+        color: white;
+      }
+    }
+  }
+
+  th {
+    background: #364fc7;
+    color: white;
+  }
+
+  @media print {
+    th {
+      color: blue;
+    }
+    td {
+      color: black;
+    }
+  }
+}
+
+.table_data {
+  @include isSmall {
+    &.현역 {
+      background-color: #1098ad;
+      color: white;
+    }
+  
+    &.예비역 {
+      background-color: #74b816;
+      color: white;
+    }
+  
+    &.일반 {
+      background-color: #fd7e14;
+      color: white;
+    }
+  }  
+
+  @media print {
+    &.soldier {
+      color: #1098ad;
+    }
+    &.예비역 {
+      color: #74b816;
+    }
+    &.일반 {
+      color: #fd7e14;
+    }
+    &.subTotal {
+      color: #ff00ea;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import db from '@/libs/database';
-import { getSessionUser } from '@/libs/getSessionUser';
+import { getSessionUser } from '@/libs/session';
 import { getId } from '@/libs/utils';
 
 export async function PATCH(req: Request) {

@@ -1,5 +1,5 @@
 import db from '@/libs/database';
-import { getSessionUser } from '@/libs/getSessionUser';
+import { getSessionUser } from '@/libs/session';
 
 export async function DELETE() {
   try {
