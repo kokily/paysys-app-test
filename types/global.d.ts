@@ -138,7 +138,7 @@ declare global {
     username: string;
   }
 
-  interface ListBillsQueries {
+  interface ListFrontsQueries {
     title?: string;
     hall?: string;
     userId?: string;
