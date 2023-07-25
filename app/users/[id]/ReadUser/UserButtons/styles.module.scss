@@ -1,0 +1,14 @@
+@import '@/styles/utils.scss';
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.contents {
+  @include isSmall {
+    flex-direction: row;
+    width: 100%;
+  }
+}

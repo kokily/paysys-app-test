@@ -78,6 +78,9 @@ declare global {
     cursor?: string;
   }
 
+  // Identify Types
+  type IdentifyType = 'admin' | 'employee';
+
   // Menu Types
   interface MenuType {
     id: number;
