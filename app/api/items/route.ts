@@ -5,8 +5,8 @@ import { getQuery } from '@/libs/utils';
 export async function GET(req: Request) {
   try {
     await checkAdmin();
-    
-    const name = getQuery(req, 'name');
+
+    const name = getQuery(req, 'name') ?? '';
     const cursor = getQuery(req, 'cursor') ?? '';
     const cursorObj = cursor === '' ? undefined : { id: cursor };
     const limit = 30;

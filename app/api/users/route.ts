@@ -1,25 +1,17 @@
 import db from '@/libs/database';
-import { getQuery } from '@/libs/utils';
+import { getQuery, serializeUser } from '@/libs/utils';
 
 export async function GET(req: Request) {
   try {
-    const title = getQuery(req, 'title') ?? '';
-    const hall = getQuery(req, 'hall') ?? '';
-    const userId = getQuery(req, 'userId') ?? '';
+    const username = getQuery(req, 'username') ?? '';
     const cursor = getQuery(req, 'cursor') ?? '';
     const cursorObj = cursor === '' ? undefined : { id: cursor };
-    const limit = 40;
+    const limit = 30;
 
-    const bills = await db.bill.findMany({
+    const users = await db.user.findMany({
       where: {
-        title: {
-          contains: title,
-        },
-        hall: {
-          contains: hall,
-        },
-        userId: {
-          contains: userId,
+        username: {
+          contains: username,
         },
       },
       cursor: cursorObj,
@@ -30,7 +22,13 @@ export async function GET(req: Request) {
       },
     });
 
-    return new Response(JSON.stringify(bills));
+    return new Response(
+      JSON.stringify(
+        users.map((data) => {
+          return serializeUser(data);
+        })
+      )
+    );
   } catch (err: any) {
     return new Response(JSON.stringify({ error: err.message }));
   }
