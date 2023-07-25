@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  .subTitle {
+    @media print {
+      margin-bottom: -25.78px;
+    }
+  }
+}
+
+.title {
+  font-size: 1.512rem;
+  color: #7950f2;
+}
+
+.name {
+  text-align: center;
+  strong {
+    color: #1098ad;
+    transition: 1.2s color;
+  }
+  .select:hover {
+    cursor: pointer;
+    color: #36bcd1;
+  }
+}

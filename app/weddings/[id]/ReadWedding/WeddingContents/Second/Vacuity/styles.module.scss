@@ -1,0 +1,9 @@
+.table_header {
+  background: white;
+  color: white;
+  border-color: white;
+  height: 27.78px;
+  @media print {
+    height: 24px;
+  }
+}
