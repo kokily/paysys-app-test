@@ -8,13 +8,16 @@ export async function DELETE(req: Request) {
 
     await checkAdmin();
 
-    await db.user.delete({
+    await db.wedding.update({
       where: { id },
+      data: {
+        husbandImage: '',
+        brideImage: '',
+        updatedAt: new Date(),
+      },
     });
 
-    return new Response(
-      JSON.stringify({ message: '사용자가 삭제되었습니다.' })
-    );
+    return new Response(JSON.stringify({ message: '서명 삭제!' }));
   } catch (err: any) {
     return new Response(JSON.stringify({ error: err.message }));
   }

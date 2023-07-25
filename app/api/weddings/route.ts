@@ -1,20 +1,20 @@
 import db from '@/libs/database';
 import { checkAdmin } from '@/libs/session';
-import { getQuery, serializeUser } from '@/libs/utils';
+import { getQuery } from '@/libs/utils';
 
 export async function GET(req: Request) {
   try {
-    const username = getQuery(req, 'username') ?? '';
+    const date = getQuery(req, 'date') ?? '';
     const cursor = getQuery(req, 'cursor') ?? '';
     const cursorObj = cursor === '' ? undefined : { id: cursor };
-    const limit = 30;
+    const limit = 40;
 
     await checkAdmin();
 
-    const users = await db.user.findMany({
+    const weddings = await db.wedding.findMany({
       where: {
-        username: {
-          contains: username,
+        eventAt: {
+          contains: date,
         },
       },
       cursor: cursorObj,
@@ -25,13 +25,7 @@ export async function GET(req: Request) {
       },
     });
 
-    return new Response(
-      JSON.stringify(
-        users.map((data) => {
-          return serializeUser(data);
-        })
-      )
-    );
+    return new Response(JSON.stringify(weddings));
   } catch (err: any) {
     return new Response(JSON.stringify({ error: err.message }));
   }
