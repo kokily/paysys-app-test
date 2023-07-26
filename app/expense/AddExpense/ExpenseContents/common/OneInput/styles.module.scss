@@ -1,0 +1,10 @@
+.one_input {
+  width: 100%;
+  border: none;
+  text-align: right;
+
+  &.name {
+    font-size: 1rem;
+    outline: auto;
+  }
+}
