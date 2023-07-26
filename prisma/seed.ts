@@ -1,4 +1,8 @@
 import type {
+  User,
+  Item,
+  Cart,
+  Bill,
   Wedding,
   Company,
   Convention,
@@ -10,6 +14,11 @@ import type {
   Reserve,
 } from '@prisma/client';
 import { PrismaClient } from '@prisma/client';
+import prevUser from './user.json';
+import prevItem from './item.json';
+import prevCart from './cart.json';
+import prevBill from './bill.json';
+import prevWedding from './wedding.json';
 import prevCompany from './company.json';
 import prevConvention from './convention.json';
 import prevEvent from './event.json';
@@ -20,6 +29,127 @@ import prevPresent from './present.json';
 import prevReserve from './reserve.json';
 
 const db = new PrismaClient();
+
+function getUser() {
+  const data: Array<User> = prevUser.map((data) => {
+    return {
+      id: data.id,
+      username: data.username,
+      password: data.password,
+      admin: data.admin,
+      createdAt: new Date(data.created_at),
+      updatedAt: new Date(data.updated_at),
+    };
+  });
+
+  return data;
+}
+
+function getItem() {
+  const data: Array<Item> = prevItem.map((data) => {
+    return {
+      id: data.id,
+      num: data.num,
+      name: data.name,
+      divide: data.divide,
+      native: data.native,
+      unit: data.unit,
+      price: data.price,
+      createdAt: new Date(data.created_at),
+      updatedAt: new Date(data.updated_at),
+    };
+  });
+
+  return data;
+}
+
+function getCart() {
+  const data: Array<Cart> = prevCart.map((data) => {
+    return {
+      id: data.id,
+      items: data.items.map((item: any) => {
+        return {
+          id: item.id,
+          num: item.num,
+          name: item.name,
+          divide: item.divide,
+          native: item.native,
+          unit: item.unit,
+          price: item.price,
+          count: item.count,
+          amount: item.amount,
+        };
+      }),
+      completed: data.completed,
+      deleted: data.deleted,
+      userId: data.user_id,
+      billId: data.bill_id,
+      createdAt: new Date(data.created_at),
+      updatedAt: new Date(data.updated_at),
+    };
+  });
+
+  return data;
+}
+
+function getBill() {
+  const data: Array<Bill> = prevBill.map((data) => {
+    return {
+      id: data.id,
+      title: data.title,
+      hall: data.hall,
+      etc: data.etc,
+      totalAmount: data.total_amount,
+      items: data.items.map((item: any) => {
+        return {
+          id: item.id,
+          num: item.num,
+          name: item.name,
+          divide: item.divide,
+          native: item.native,
+          unit: item.unit,
+          price: item.price,
+          count: item.count,
+          amount: item.amount,
+        };
+      }),
+      reserve: data.reserve ? parseInt(data.reserve) : null,
+      cartId: data.cart_id,
+      userId: data.user_id,
+      username: data.username,
+      createdAt: new Date(data.created_at),
+      updatedAt: new Date(data.created_at),
+    };
+  });
+
+  return data;
+}
+
+function getWedding() {
+  const data: Array<Wedding> = prevWedding.map((data) => {
+    return {
+      id: data.id,
+      husbandName: data.husband_name,
+      husbandImage: data.husband_image,
+      brideName: data.husband_name,
+      brideImage: data.bride_image,
+      weddingAt: data.wedding_at,
+      eventAt: data.event_at,
+      costHusband: data.cost_husband,
+      costBride: data.cost_bride,
+      mealHusband: data.meal_husband,
+      mealBride: data.meal_bride,
+      presentHusband: data.present_husband,
+      presentBride: data.present_bride,
+      reserveHusband: data.reserve_husband,
+      reserveBride: data.reserve_bride,
+      createdAt: new Date(data.created_at),
+      updatedAt: new Date(data.updated_at),
+    };
+  });
+
+  return data;
+}
 
 function getCompany() {
   const data: Array<Company> = prevCompany.map((data) => {
@@ -166,6 +296,86 @@ function getReserve() {
 }
 
 async function seed() {
+  await Promise.all(
+    getUser().map((data) => {
+      return db.user.create({ data });
+    })
+  );
+
+  await Promise.all(
+    getItem().map((data) => {
+      return db.item.create({ data });
+    })
+  );
+
+  await Promise.all(
+    getCart().map((data) => {
+      return db.cart.create({
+        data: {
+          id: data.id,
+          items: data.items.map((item: any) => {
+            return {
+              id: item.id,
+              num: item.num,
+              name: item.name,
+              divide: item.divide,
+              native: item.native,
+              unit: item.unit,
+              price: item.price,
+              count: item.count,
+              amount: item.amount,
+            };
+          }),
+          completed: data.completed,
+          deleted: data.deleted,
+          userId: data.userId,
+          billId: data.billId,
+          createdAt: new Date(data.createdAt),
+          updatedAt: new Date(data.updatedAt),
+        },
+      });
+    })
+  );
+
+  await Promise.all(
+    getBill().map((data) => {
+      return db.bill.create({
+        data: {
+          id: data.id,
+          title: data.title,
+          hall: data.hall,
+          etc: data.etc,
+          totalAmount: data.totalAmount,
+          items: data.items.map((item: any) => {
+            return {
+              id: item.id,
+              num: item.num,
+              name: item.name,
+              divide: item.divide,
+              native: item.native,
+              unit: item.unit,
+              price: item.price,
+              count: item.count,
+              amount: item.amount,
+            };
+          }),
+          reserve: data.reserve,
+          cartId: data.cartId,
+          userId: data.userId,
+          username: data.username,
+          createdAt: new Date(data.createdAt),
+          updatedAt: new Date(data.updatedAt),
+        },
+      });
+    })
+  );
+
+  await Promise.all(
+    getWedding().map((data) => {
+      return db.wedding.create({ data });
+    })
+  );
+
   await Promise.all(
     getCompany().map((data) => {
       return db.company.create({ data });
